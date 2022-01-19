@@ -11,13 +11,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
 import re
 import time
 #///////////// safe link stuff
 import posixpath as path
 from urllib.parse import urlparse, parse_qs, urlunparse
-#/////////////////////////////////////////////////////////////////////
+#///////////////////////////////////////////////////////////////////// outlook stuff
 import win32com.client
 # /////////////////////////////////////////////////////////////////////
 # close all tabs
@@ -25,6 +24,7 @@ def closeAllTabs(brwsr):
     for handle in brwsr.window_handles:
         brwsr.switch_to.window(handle)
         brwsr.close()
+# create a browser obj with URL started up
 def init_browser(start_URL):
     chrome_options = Options()
     chrome_options.add_experimental_option("detach", True)
@@ -36,6 +36,7 @@ def init_browser(start_URL):
     b.get(start_URL)
     #returns a browser obj
     return b
+# check login credentials
 def login(netID, password):
     print('Trying to login....')
     print('___________________')
@@ -52,7 +53,7 @@ def login(netID, password):
     except:
         closeAllTabs(browser)
         return False
-
+# add netID and URL to COP aff
 def addNetID(NID, URL):
     browser = init_browser('https://groups.accc.uic.edu/login')
     browser.find_element(By.ID,'inputUserid').send_keys(netID)
